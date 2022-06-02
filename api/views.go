@@ -2,13 +2,15 @@ package api
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func StartRouter() {
 	router := gin.Default()
-	router.LoadHTMLFiles("/home/nikolabroyak/code/src/niQurl/api/templates/404.html")
+	path, _ := os.Getwd()
+	router.LoadHTMLFiles(path + "/api/templates/404.html")
 	// router.GET("/albums", getAlbums)
 	// router.GET("/albums/:id", getAlbumByID)
 	// router.GET("/url", viewURL)
