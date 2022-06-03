@@ -2,38 +2,41 @@ package cli
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/urfave/cli"
+	"github.com/desertbit/grumble"
+	"github.com/fatih/color"
 )
 
+var App = grumble.New(&grumble.Config{
+	Name: "NiQurl",
+	Description: "\n\n*    .##....##.####..#######..##.....##.########..##......\n" +
+		"*    .###...##..##..##.....##.##.....##.##.....##.##......\n" +
+		"*    .####..##..##..##.....##.##.....##.##.....##.##......\n" +
+		"*    .##.##.##..##..##.....##.##.....##.########..##......\n" +
+		"*    .##..####..##..##..##.##.##.....##.##...##...##......\n" +
+		"*    .##...###..##..##....##..##.....##.##....##..##......\n" +
+		"*    .##....##.####..#####.##..#######..##.....##.########\n\n" +
+		"            NiQurl - Simple URL Shortening App\n\n\n            ",
+	Prompt:                "NiQurl>",
+	PromptColor:           color.New(color.BgMagenta, color.Bold, color.FgBlack),
+	HelpHeadlineColor:     color.New(color.FgMagenta),
+	HelpHeadlineUnderline: true,
+	HelpSubCommands:       true,
+	Flags: func(f *grumble.Flags) {
+		f.Int("z", "generate-fake-users", 0, "help string")
+	},
+})
+
+// Create CLI commands
+func init() {
+	MakeURL()
+	SetLen()
+	SetTime()
+	CLISettings()
+	App.OnInit(CLIInitialize)
+}
+
 func Start() {
-	// set args for examples sake
-	os.Args = []string{"greet", "--generate-bash-completion"}
-
-	app := cli.NewApp()
-	app.Name = "greet"
-	app.EnableBashCompletion = true
-	app.Commands = []cli.Command{
-		{
-			Name:        "describeit",
-			Aliases:     []string{"d"},
-			Usage:       "use it to see a description",
-			Description: "This is how we describe describeit the function",
-			Action: func(c *cli.Context) error {
-				fmt.Printf("i like to describe things")
-				return nil
-			},
-		}, {
-			Name:        "next",
-			Usage:       "next example",
-			Description: "more stuff to see when generating bash completion",
-			Action: func(c *cli.Context) error {
-				fmt.Printf("the next example")
-				return nil
-			},
-		},
-	}
-
-	_ = app.Run(os.Args)
+	fmt.Println(App.Config().Description)
+	grumble.Main(App)
 }
