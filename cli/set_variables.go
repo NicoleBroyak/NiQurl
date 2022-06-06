@@ -2,23 +2,31 @@ package cli
 
 import (
 	"fmt"
-	"redis"
+	"redishandler"
 )
 
-func SetVariables() {
-	rdb := redis.RedisStart()
-	defer rdb.Close()
-	u, _ := rdb.Get(redis.Ctx, "SHORT_URL_LEN").Result()
-	t, _ := rdb.Get(redis.Ctx, "USER_WAIT_TIME").Result()
-	if u == "" || t == "" {
-		rdb.Set(redis.Ctx, "USER_WAIT_TIME", 1000, 0)
-		rdb.Set(redis.Ctx, "SHORT_URL_LEN", 4, 0)
-		i, _ := rdb.Do(redis.Ctx, "ZCOUNT", "longurl", "-inf", "+inf").Result()
-		j, _ := rdb.Do(redis.Ctx, "ZCOUNT", "username", "-inf", "+inf").Result()
-		fmt.Println(i, j)
-		rdb.Set(redis.Ctx, "url_count", i, 0)
-		rdb.Set(redis.Ctx, "user_count", j, 0)
-		Settings()
+func SetVariables() error {
+	RDB := redishandler.RedisStart()
+	defer RDB.Close()
+
+	_, err := RDB.Get(redishandler.Ctx, "SHORT_URL_LEN").Int()
+	_, err2 := RDB.Get(redishandler.Ctx, "USER_WAIT_TIME").Int()
+
+	if err != nil || err2 != nil {
+		RDB.Set(redishandler.Ctx, "USER_WAIT_TIME", 30, 0)
+		RDB.Set(redishandler.Ctx, "SHORT_URL_LEN", 4, 0)
+		i, err := redishandler.CheckIntVar("URL_COUNT", RDB)
+		if err != nil {
+			return err
+		}
+		j, err := redishandler.CheckIntVar("USER_COUNT", RDB)
+		if err != nil {
+			return err
+		}
+		RDB.Set(redishandler.Ctx, "URL_COUNT", i, 0)
+		RDB.Set(redishandler.Ctx, "USER_COUNT", j, 0)
+		LoadSettings(RDB)
 		fmt.Println("initializing database keys")
 	}
+	return nil
 }

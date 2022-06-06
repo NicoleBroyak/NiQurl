@@ -1,26 +1,26 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"os"
-	"redis"
+
+	"github.com/go-redis/redis/v8"
 
 	"github.com/desertbit/grumble"
 )
 
-func CLISettings() {
+// cli command "settings"
+func CLISettings(RDB *redis.Client, Ctx context.Context) {
 	App.AddCommand(&grumble.Command{
 		Name: "settings",
 		Help: "show settings",
 		Run: func(c *grumble.Context) error {
 			fmt.Println("Current settings")
-			rdb := redis.RedisStart()
-			defer rdb.Close()
-			urllen, _ := rdb.Get(redis.Ctx, "SHORT_URL_LEN").Result()
-			waittime, _ := rdb.Get(redis.Ctx, "USER_WAIT_TIME").Result()
+			urllen, _ := RDB.Get(Ctx, "SHORT_URL_LEN").Result()
+			waittime, _ := RDB.Get(Ctx, "USER_WAIT_TIME").Result()
 			fmt.Fprintf(os.Stdout, "short url length: %q characters\n", urllen)
-			fmt.Fprintf(os.Stdout, "user wait time: %q ms \n", waittime)
-			c.App.Println("generate-fake-users:", c.Flags.Int("generate-fake-users"))
+			fmt.Fprintf(os.Stdout, "user wait time: %q s \n", waittime)
 			return nil
 		},
 	})

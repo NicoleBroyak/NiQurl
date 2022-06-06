@@ -1,20 +1,38 @@
 package cli
 
 import (
+	"fmt"
 	"math/rand"
-	"redis"
+	"redishandler"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
-func ShortenURL(longurl string) (string, string, error) {
-	b := make([]byte, SHORT_URL_LEN)
-	for i := range b {
-		rand.Seed(time.Now().UTC().UnixNano())
-		b[i] = ALLOWED_URL_CHARS[rand.Intn(len(ALLOWED_URL_CHARS))]
+func ShortenURL(longurl string, RDB *redis.Client) string {
+
+	shorturl := ""
+	for b, i := true, 0; b; i++ {
+		u := make([]byte, SHORT_URL_LEN)
+		for i := range u {
+			rand.Seed(time.Now().UTC().UnixNano())
+			u[i] = ALLOWED_URL_CHARS[rand.Intn(len(ALLOWED_URL_CHARS))]
+		}
+
+		shorturl = string(u)
+		q, _ := redishandler.SearchURL(shorturl, "shorturl", RDB)
+		if q == true {
+			continue
+		}
+
+		// If loop can't find available url with specific length, increase length and try again
+		if i == 100 {
+			SHORT_URL_LEN += 1
+			fmt.Printf("SHORT_URL_LEN increased to %v\n", SHORT_URL_LEN)
+			RDB.Set(redishandler.Ctx, "SHORT_URL_LEN", SHORT_URL_LEN, 0)
+			continue
+		}
+		break
 	}
-	rdb := redis.RedisStart()
-	defer rdb.Close()
-
-	return longurl, string(b), nil
-
+	return shorturl
 }

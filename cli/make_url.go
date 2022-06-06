@@ -1,13 +1,15 @@
 package cli
 
 import (
-	"fmt"
-	"redis"
+	r "redishandler"
+
+	"github.com/go-redis/redis/v8"
 
 	"github.com/desertbit/grumble"
 )
 
-func MakeURL() {
+// cli command "make"
+func MakeURL(RDB *redis.Client) {
 	App.AddCommand(&grumble.Command{
 		Name: "make",
 		Help: "shorten url",
@@ -15,18 +17,22 @@ func MakeURL() {
 			a.String("url", "url")
 		},
 		Run: func(c *grumble.Context) error {
+			LoadSettings(RDB)
 			url := c.Args.String("url")
-			b, _ := redis.QueryURL(url)
+
+			b, _ := r.SearchURL(c.Args.String("url"), "longurl", RDB)
 			if b {
-				shorturl, _ := redis.ReturnURL(url)
-				fmt.Println("URL [" + url + "] shortened before to: " + shorturl)
+				r.ReturnURL(url, RDB)
 				return nil
 			}
-			user := AssignRandUser()
-			longurl, shorturl, _ := ShortenURL(c.Args.String("url"))
-			redis.MakeURL(longurl, shorturl, user)
-			fmt.Println("Creating short URL for [" + longurl + "]: " + shorturl)
-			// redis.WaitTime()
+
+			user := r.AssignRandUser(RDB)
+			b = r.CheckWaitTime(user, RDB)
+
+			if b == false {
+				shorturl := ShortenURL(c.Args.String("url"), RDB)
+				r.InsertURL(url, shorturl, user, RDB, USER_WAIT_TIME, URL_COUNT)
+			}
 			return nil
 		},
 	})
