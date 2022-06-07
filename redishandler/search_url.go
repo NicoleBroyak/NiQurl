@@ -5,12 +5,12 @@ import (
 )
 
 //
-func SearchURL(url, ver string, RDB *redis.Client) (bool, error) {
+func SearchURL(url, ver string, RDB *redis.Client) bool {
 	// s can be "[val [url val]]"" or "[val []]""
 	s := RDB.Do(Ctx, "zscan", ver, "0", "match", url).String()
 	s = s[len(s)-3:]
 	if s == "[]]" {
-		return false, nil
+		return false
 	}
-	return true, nil
+	return true
 }

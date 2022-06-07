@@ -1,9 +1,8 @@
 package cli
 
 import (
-	"redishandler"
-
-	"github.com/go-redis/redis/v8"
+	"errors"
+	r "redishandler"
 )
 
 var SHORT_URL_LEN int
@@ -13,7 +12,9 @@ var URL_COUNT int
 
 const ALLOWED_URL_CHARS string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func LoadSettings(RDB *redis.Client) error {
+func LoadSettings() error {
+	RDB := r.RedisStart()
+	defer RDB.Close()
 
 	a := map[string]*int{
 		"SHORT_URL_LEN":  &SHORT_URL_LEN,
@@ -22,10 +23,11 @@ func LoadSettings(RDB *redis.Client) error {
 		"URL_COUNT":      &URL_COUNT}
 
 	for k, v := range a {
-		x, err := RDB.Get(redishandler.Ctx, k).Int()
-		if err != nil {
-			return err
+		b, _ := RDB.Get(r.Ctx, k).Result()
+		if len(b) == 0 {
+			return errors.New("Value " + k + " not found")
 		}
+		x, _ := RDB.Get(r.Ctx, k).Int()
 		*v = x
 	}
 	return nil

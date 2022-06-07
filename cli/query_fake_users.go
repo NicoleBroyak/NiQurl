@@ -1,11 +1,8 @@
 package cli
 
 import (
-	"encoding/json"
+	"errors"
 	"fmt"
-	"io"
-	"net/http"
-	"redishandler"
 	"time"
 )
 
@@ -39,24 +36,23 @@ type UsersStruct struct {
 	} `json:"info"`
 }
 
-func QueryFakeUsers(i int) {
+func QueryFakeUsers(i int) error {
+	if i > 1000 || i < 1 {
+		return errors.New("You can generate between 1 and 1000 users one time")
+	}
+
 	Users := UsersStruct{}
 	fmt.Println("Generating random users...")
 	url := fmt.Sprintf("https://randomuser.me/api/?results=%d&inc=login,name,email,registered", i+1)
-	res, _ := http.Get(url)
-	body, _ := io.ReadAll(res.Body)
-	err := json.Unmarshal(body, &Users)
+
+	errs := QFUFillStruct(url, &Users)
+	err := QFUErrHandler(errs)
+
 	if err == nil {
 		for index := 0; index < i; index++ {
-			username := Users.Results[index].Login.Username
-			firstname := Users.Results[index].Name.First
-			lastname := Users.Results[index].Name.Last
-			email := Users.Results[index].Email
-			regdate := Users.Results[index].Registered.Date
-			userdata := [4]string{username, firstname, lastname, email}
-			redishandler.InsertUser(userdata, regdate)
-			USER_COUNT += 1
+			QFUCreateUser(&Users, index)
 		}
+		return nil
 	}
-
+	return err
 }

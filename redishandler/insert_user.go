@@ -1,8 +1,6 @@
 package redishandler
 
-import "time"
-
-func InsertUser(userdata [4]string, regdate time.Time) {
+func InsertUser(userdata [5]string) {
 	RDB := RedisStart()
 	defer RDB.Close()
 
@@ -12,5 +10,5 @@ func InsertUser(userdata [4]string, regdate time.Time) {
 	RDB.Do(Ctx, "RPUSH", "firstname", userdata[1])
 	RDB.Do(Ctx, "RPUSH", "lastname", userdata[2])
 	RDB.Do(Ctx, "ZADD", "email", id, userdata[3])
-	RDB.Do(Ctx, "RPUSH", "regdate", regdate)
+	RDB.Do(Ctx, "RPUSH", "regdate", userdata[4])
 }

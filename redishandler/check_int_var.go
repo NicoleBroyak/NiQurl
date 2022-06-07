@@ -6,11 +6,12 @@ import (
 
 func CheckIntVar(val string, RDB *redis.Client) (int, error) {
 
-	v, err := RDB.Do(Ctx, "ZCOUNT", val, "-inf", "+inf").Int()
+	_, err := RDB.Do(Ctx, "ZCOUNT", val, "-inf", "+inf").Result()
 	if err != nil {
 		return 0, err
 	}
 
+	v, _ := RDB.Do(Ctx, "ZCOUNT", val, "-inf", "+inf").Int()
 	RDB.Set(Ctx, val, v, 0)
 	return v, nil
 }

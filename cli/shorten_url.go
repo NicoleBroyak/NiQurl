@@ -20,7 +20,7 @@ func ShortenURL(longurl string, RDB *redis.Client) string {
 		}
 
 		shorturl = string(u)
-		q, _ := redishandler.SearchURL(shorturl, "shorturl", RDB)
+		q := redishandler.SearchURL(shorturl, "shorturl", RDB)
 		if q == true {
 			continue
 		}
