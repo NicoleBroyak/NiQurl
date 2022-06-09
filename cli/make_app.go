@@ -5,8 +5,8 @@ import (
 	"github.com/fatih/color"
 )
 
-func MakeApp() *grumble.App {
-	App := grumble.New(&grumble.Config{
+func makeApp() *grumble.App {
+	app := grumble.New(&grumble.Config{
 		Name: "NiQurl",
 		Description: "\n\n*    .##....##.####..#######..##.....##.########..##......\n" +
 			"*    .###...##..##..##.....##.##.....##.##.....##.##......\n" +
@@ -27,10 +27,7 @@ func MakeApp() *grumble.App {
 			f.Int("z", "generate-fake-users", 0, "help string")
 		},
 	})
-	MakeURL(App)
-	SetLen(App)
-	SetTime(App)
-	CLISettings(App)
-	App.OnInit(CLIInitialize)
-	return App
+	commands(app)
+	app.OnInit(initialize)
+	return app
 }

@@ -1,12 +1,11 @@
 package redishandler
 
 import (
-	"context"
-
 	"github.com/go-redis/redis/v8"
 )
 
-var Ctx = context.Background()
+var RDB = RedisStart()
+var Ctx = RDB.Context()
 
 func RedisStart() *redis.Client {
 	RDB := redis.NewClient(&redis.Options{

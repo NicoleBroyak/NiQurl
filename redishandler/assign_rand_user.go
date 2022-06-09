@@ -1,16 +1,13 @@
 package redishandler
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
 
 	"time"
-
-	"github.com/go-redis/redis/v8"
 )
 
-func AssignRandUser(RDB *redis.Client) (string, error) {
+func AssignRandUser() (string, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	uc, err := RDB.Get(Ctx, "USER_COUNT").Int()
 	if err != nil {
@@ -21,6 +18,6 @@ func AssignRandUser(RDB *redis.Client) (string, error) {
 	if len(user) != 0 {
 		return user[0], nil
 	}
-	return "", errors.New(fmt.Sprintf("Empty user, %v", randnum))
+	return "", fmt.Errorf("Empty user, %v", randnum)
 
 }
