@@ -74,6 +74,7 @@ func shortURLGenerate(n int) string {
 
 func TrimURL(url string) string {
 	url = strings.TrimPrefix(url, "http://")
+	url = strings.TrimPrefix(url, "https://")
 	url = strings.TrimPrefix(url, "https://www.")
 	url = strings.TrimPrefix(url, "www.")
 	url = strings.TrimSuffix(url, ".")
