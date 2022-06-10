@@ -5,7 +5,7 @@ import (
 	"github.com/fatih/color"
 )
 
-func makeApp() *grumble.App {
+func createApp() *grumble.App {
 	app := grumble.New(&grumble.Config{
 		Name: "NiQurl",
 		Description: "\n\n*    .##....##.####..#######..##.....##.########..##......\n" +

@@ -4,10 +4,10 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-var RDB = RedisStart()
+var RDB = Start()
 var Ctx = RDB.Context()
 
-func RedisStart() *redis.Client {
+func Start() *redis.Client {
 	RDB := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "", // no password set

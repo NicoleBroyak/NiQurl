@@ -1,6 +1,12 @@
 package cli
 
-import "github.com/desertbit/grumble"
+import (
+	"fmt"
+	"log"
+	r "redishandler"
+
+	"github.com/desertbit/grumble"
+)
 
 func commands(app *grumble.App) {
 	settime(app)
@@ -41,7 +47,7 @@ func makeurl(app *grumble.App) {
 		Args: func(a *grumble.Args) {
 			a.String("url", "url")
 		},
-		Run: cmdMakeURL,
+		Run: cmdMake,
 	})
 }
 
@@ -56,4 +62,57 @@ func settings(app *grumble.App) {
 		Help: "show settings",
 		Run:  cmdSettings,
 	})
+}
+
+func cmdSettings(c *grumble.Context) error {
+	r.CheckSettings()
+	fmt.Println("Current settings")
+	fmt.Printf(
+		"short url length: %v characters\n",
+		r.RDB.Get(r.Ctx, "SHORT_URL_LEN"),
+	)
+	fmt.Printf(
+		"user wait time: %v s \n",
+		r.RDB.Get(r.Ctx, "USER_WAIT_TIME"),
+	)
+	return nil
+}
+
+func cmdSetVar(cmd, v string, min, max int, c *grumble.Context) error {
+	if c.Args.Int(cmd) < min || c.Args.Int(cmd) > max {
+		err := fmt.Errorf("%v variable must be between %v and %v", v, min, max)
+		return err
+	}
+	r.RDB.Set(r.Ctx, v, c.Args.Int(cmd), 0)
+	log.Printf("%v set to %v\n", v, c.Args.Int(cmd))
+	return nil
+}
+
+func cmdSetLen(c *grumble.Context) error {
+	return cmdSetVar("setlen", "SHORT_URL_LEN", 1, 20, c)
+}
+
+func cmdSetTime(c *grumble.Context) error {
+	return cmdSetVar("settime", "USER_WAIT_TIME", 1, 1<<20, c)
+}
+
+func cmdMake(c *grumble.Context) error {
+	url := c.Args.String("url")
+	if r.VerifyURL(url) {
+		url = r.TrimURL(url)
+		r.CheckSettings()
+		if r.CheckZSet(url, "longurl") == true {
+			r.PrintShortURL(url)
+			return nil
+		}
+		user := r.RandomUser()
+		if r.CheckWaitTime(user) == false {
+			shrt := r.ShortURL(url)
+			r.InsertURL(url, shrt, user)
+			return nil
+		}
+		return nil
+	}
+	log.Printf("incorrect url %v", url)
+	return nil
 }

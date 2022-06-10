@@ -7,7 +7,7 @@ import (
 )
 
 func initialize(a *grumble.App, flags grumble.FlagMap) error {
-	r.CheckVariables()
-	r.GenerateFakeUsers(a, flags)
+	r.CheckSettings()
+	GFUflag(a, flags)
 	return nil
 }
