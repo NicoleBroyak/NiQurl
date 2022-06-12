@@ -24,7 +24,7 @@ func createApp() *grumble.App {
 		HelpHeadlineUnderline: true,
 		HelpSubCommands:       true,
 		Flags: func(f *grumble.Flags) {
-			f.Int("z", "generate-fake-users", 0, "help string")
+			f.Int("g", "generate-fake-users", 0, "help string")
 		},
 	})
 	commands(app)

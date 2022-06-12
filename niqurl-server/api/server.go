@@ -13,5 +13,5 @@ func StartServer() {
 	server.GET("/!:url", viewURL)
 	server.GET("/:url", redirectURL)
 	server.NoRoute(notFound)
-	server.Run("localhost:8081")
+	server.Run(":8081")
 }

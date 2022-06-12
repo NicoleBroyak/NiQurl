@@ -17,12 +17,12 @@ func PrintShortURL(url string) error {
 		return err
 	}
 	shorturl := RDB.ZRange(Ctx, "shorturl", int64(i), int64(i)).Val()
-	fmt.Println("URL [" + url + "] shortened before to: " + shorturl[0])
+	fmt.Println("URL [" + url + "] shortened before to: " + "niqurl-server:8081/" + shorturl[0])
 	return nil
 }
 
 func InsertURL(url, shorturl, user string) {
-	fmt.Println("Creating short URL for [" + url + "]: " + shorturl)
+	fmt.Println("Creating short URL for [" + url + "]: " + "niqurl-server:8081/" + shorturl)
 	wt, _ := getSetting("USER_WAIT_TIME")
 	uc, _ := getSetting("URL_COUNT")
 	RDB.Incr(Ctx, "URL_COUNT")
