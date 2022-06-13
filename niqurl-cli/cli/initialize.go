@@ -7,7 +7,7 @@ import (
 )
 
 func initialize(a *grumble.App, flags grumble.FlagMap) error {
-	redishandler.CheckSettings()
+	redishandler.ManageSettings()
 	GFUflag(a, flags)
 	return nil
 }

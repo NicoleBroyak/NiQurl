@@ -18,14 +18,14 @@ func getSetting(setting string) (int, error) {
 	return v, nil
 }
 
-func CheckSettings() {
-	checkSetting("SHORT_URL_LEN", 4)
-	checkSetting("USER_WAIT_TIME", 30)
-	checkSetting("URL_COUNT", 0)
-	checkSetting("USER_COUNT", 0)
+func ManageSettings() {
+	manageSetting("SHORT_URL_LEN", 4)
+	manageSetting("USER_WAIT_TIME", 30)
+	manageSetting("URL_COUNT", 0)
+	manageSetting("USER_COUNT", 0)
 }
 
-func checkSetting(setting string, def int) {
+func manageSetting(setting string, def int) {
 	_, err := getSetting(setting)
 	if err != nil {
 		RDB.Set(Ctx, setting, def, 0)

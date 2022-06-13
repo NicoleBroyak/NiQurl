@@ -65,7 +65,7 @@ func settings(app *grumble.App) {
 }
 
 func cmdSettings(c *grumble.Context) error {
-	redishandler.CheckSettings()
+	redishandler.ManageSettings()
 	fmt.Println("Current settings")
 	fmt.Printf(
 		"short url length: %v characters\n",
@@ -98,7 +98,7 @@ func cmdSetTime(c *grumble.Context) error {
 
 func cmdMake(c *grumble.Context) error {
 	url := c.Args.String("url")
-	redishandler.CheckSettings()
+	redishandler.ManageSettings()
 	if redishandler.CheckZSet(url, "longurl") == true {
 		redishandler.PrintShortURL(url)
 		return nil
