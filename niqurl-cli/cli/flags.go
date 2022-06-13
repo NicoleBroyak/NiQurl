@@ -2,7 +2,7 @@ package cli
 
 import (
 	"log"
-	r "redishandler"
+	"redishandler"
 
 	"github.com/desertbit/grumble"
 )
@@ -15,5 +15,5 @@ func GFUflag(a *grumble.App, flags grumble.FlagMap) error {
 		}
 		return nil
 	}
-	return r.GenerateFakeUsers(num)
+	return redishandler.GenerateFakeUsers(num)
 }

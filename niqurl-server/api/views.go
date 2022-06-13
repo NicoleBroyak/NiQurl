@@ -2,13 +2,13 @@ package api
 
 import (
 	"net/http"
-	r "redishandler"
+	"redishandler"
 
 	"github.com/gin-gonic/gin"
 )
 
 func redirectURL(c *gin.Context) {
-	url, err := r.RedirectAPI(c.Param("url"))
+	url, err := redishandler.RedirectAPI(c.Param("url"))
 	if err != nil {
 		notFound(c)
 		return
@@ -17,7 +17,7 @@ func redirectURL(c *gin.Context) {
 }
 
 func viewURL(c *gin.Context) {
-	x, b := r.ViewAPI(c.Param("url"))
+	x, b := redishandler.ViewAPI(c.Param("url"))
 	if b != nil {
 		notFound(c)
 		return

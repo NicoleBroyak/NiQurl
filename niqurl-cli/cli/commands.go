@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 	"log"
-	r "redishandler"
+	"redishandler"
 
 	"github.com/desertbit/grumble"
 )
@@ -65,15 +65,15 @@ func settings(app *grumble.App) {
 }
 
 func cmdSettings(c *grumble.Context) error {
-	r.CheckSettings()
+	redishandler.CheckSettings()
 	fmt.Println("Current settings")
 	fmt.Printf(
 		"short url length: %v characters\n",
-		r.RDB.Get(r.Ctx, "SHORT_URL_LEN"),
+		redishandler.RDB.Get(redishandler.Ctx, "SHORT_URL_LEN"),
 	)
 	fmt.Printf(
 		"user wait time: %v s \n",
-		r.RDB.Get(r.Ctx, "USER_WAIT_TIME"),
+		redishandler.RDB.Get(redishandler.Ctx, "USER_WAIT_TIME"),
 	)
 	return nil
 }
@@ -83,7 +83,7 @@ func cmdSetVar(cmd, v string, min, max int, c *grumble.Context) error {
 		err := fmt.Errorf("%v variable must be between %v and %v", v, min, max)
 		return err
 	}
-	r.RDB.Set(r.Ctx, v, c.Args.Int(cmd), 0)
+	redishandler.RDB.Set(redishandler.Ctx, v, c.Args.Int(cmd), 0)
 	log.Printf("%v set to %v\n", v, c.Args.Int(cmd))
 	return nil
 }
@@ -98,21 +98,16 @@ func cmdSetTime(c *grumble.Context) error {
 
 func cmdMake(c *grumble.Context) error {
 	url := c.Args.String("url")
-	if r.VerifyURL(url) {
-		url = r.TrimURL(url)
-		r.CheckSettings()
-		if r.CheckZSet(url, "longurl") == true {
-			r.PrintShortURL(url)
-			return nil
-		}
-		user := r.RandomUser()
-		if r.CheckWaitTime(user) == false {
-			shrt := r.ShortURL(url)
-			r.InsertURL(url, shrt, user)
-			return nil
-		}
+	redishandler.CheckSettings()
+	if redishandler.CheckZSet(url, "longurl") == true {
+		redishandler.PrintShortURL(url)
 		return nil
 	}
-	log.Printf("incorrect url %v", url)
+	user := redishandler.RandomUser()
+	if redishandler.CheckWaitTime(user) == false {
+		shrt := redishandler.ShortURL(url)
+		redishandler.InsertURL(url, shrt, user)
+		return nil
+	}
 	return nil
 }

@@ -2,13 +2,16 @@ package redishandler
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
+	"path"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/go-redis/redis/v8"
 )
+
+var ServerPath string = "niqurl-server:8081"
 
 func PrintShortURL(url string) error {
 	x, _ := RDB.ZScan(Ctx, "longurl", 0, url, 0).Val()
@@ -17,12 +20,12 @@ func PrintShortURL(url string) error {
 		return err
 	}
 	shorturl := RDB.ZRange(Ctx, "shorturl", int64(i), int64(i)).Val()
-	fmt.Println("URL [" + url + "] shortened before to: " + "niqurl-server:8081/" + shorturl[0])
+	fmt.Println("URL [" + url + "] shortened before to: " + path.Join(ServerPath, shorturl[0]))
 	return nil
 }
 
 func InsertURL(url, shorturl, user string) {
-	fmt.Println("Creating short URL for [" + url + "]: " + "niqurl-server:8081/" + shorturl)
+	fmt.Println("Creating short URL for [" + url + "]: " + path.Join(ServerPath, shorturl))
 	wt, _ := getSetting("USER_WAIT_TIME")
 	uc, _ := getSetting("URL_COUNT")
 	RDB.Incr(Ctx, "URL_COUNT")
@@ -38,12 +41,10 @@ func ShortURL(url string) string {
 	n, _ := getSetting("SHORT_URL_LEN")
 
 	for i := 0; true; i++ {
-		// If loop can't find available url with specific length
-		// increase length and try again
 		if i == 100 {
-			shortURLIncrLen(n)
-			i = 0
-			continue
+			log.Printf("Can't find available url with lenght of : %v\n", n)
+			log.Println("Increase url length by setlen command")
+			break
 		}
 		shrt = shortURLGenerate(n)
 		if CheckZSet(shrt, "shorturl") == true {
@@ -52,12 +53,6 @@ func ShortURL(url string) string {
 		break
 	}
 	return shrt
-}
-
-func shortURLIncrLen(n int) {
-	n += 1
-	fmt.Printf("SHORT_URL_LEN increased to %v\n", n)
-	RDB.Set(Ctx, "SHORT_URL_LEN", n, 0)
 }
 
 // returns random
@@ -70,29 +65,4 @@ func shortURLGenerate(n int) string {
 	}
 
 	return string(u)
-}
-
-func TrimURL(url string) string {
-	url = strings.TrimPrefix(url, "http://")
-	url = strings.TrimPrefix(url, "https://")
-	url = strings.TrimPrefix(url, "https://www.")
-	url = strings.TrimPrefix(url, "www.")
-	url = strings.TrimSuffix(url, ".")
-	parts := strings.Split(url, ".")
-	parts[0] = strings.ToLower(parts[0])
-	parts[0] = "https://" + parts[0]
-	return strings.Join(parts, ".")
-}
-
-func VerifyURL(url string) bool {
-	if strings.HasSuffix(url, ".") {
-		return false
-	}
-	if strings.Contains(url, "..") {
-		return false
-	}
-	if !strings.Contains(url, ".") {
-		return false
-	}
-	return true
 }

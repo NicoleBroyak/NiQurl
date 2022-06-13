@@ -7,6 +7,6 @@ import (
 
 func main() {
 	redishandler.Start()
-	api.StartServer()
 	defer redishandler.RDB.Close()
+	api.StartServer()
 }

@@ -1,13 +1,13 @@
 package cli
 
 import (
-	r "redishandler"
+	"redishandler"
 
 	"github.com/desertbit/grumble"
 )
 
 func initialize(a *grumble.App, flags grumble.FlagMap) error {
-	r.CheckSettings()
+	redishandler.CheckSettings()
 	GFUflag(a, flags)
 	return nil
 }
