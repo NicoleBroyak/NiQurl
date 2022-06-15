@@ -1,0 +1,28 @@
+services:
+  niqurl-server:
+    container_name: niqurl-server
+    build: https://raw.githubusercontent.com/nicolebroyak/niqurl/master/build/server/Dockerfile
+    links:
+      - redis
+    ports:
+      - "8081"
+    networks:
+      - default
+  niqurl-cli:
+    container_name: niqurl-cli
+    build: https://raw.githubusercontent.com/nicolebroyak/niqurl/master/build/cli/Dockerfile
+    links:
+      - redis
+      - niqurl-server
+    networks:
+      - default
+    stdin_open: true 
+    tty: true        
+  redis:
+    container_name: niqurl-redis
+    image: redis
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
