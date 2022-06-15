@@ -1,10 +1,14 @@
-module github.com/nicolebroyak/niqurl/cmd/cli
+module github.com/nicolebroyak/cmd/cli
 
 go 1.18
 
+replace github.com/nicolebroyak/niqurl v0.0.1 => github.com/nicolebroyak/niqurl v0.0.0-20220615165012-a672b822aa44
+
+replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.1 => github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44
+
 require (
 	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220615165012-a672b822aa44
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.1
 )
 
 require (

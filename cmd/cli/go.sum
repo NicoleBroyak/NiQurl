@@ -51,10 +51,10 @@ github.com/mattn/go-isatty v0.0.14 h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9
 github.com/mattn/go-isatty v0.0.14/go.mod h1:7GGIvUiUoEMVVmxf/4nioHXj79iQHKdU27kJ6hsGG94=
 github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b/go.mod h1:01TrycV0kFyexm33Z7vhZRXopbI8J3TDReVlkTgMUxE=
 github.com/nbutton23/zxcvbn-go v0.0.0-20180912185939-ae427f1e4c1d/go.mod h1:o96djdrsSGy3AWPyBgZMAGfxZNfgntdJG+11KU4QvbU=
-github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220614165001-119e693ceb85 h1:Vi0JO3qsXE8hTOrNiDgrGEaYrsy2hQVPV5hg+EsQZCs=
-github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220614165001-119e693ceb85/go.mod h1:G/zhmJGBJoixB2Y+8pxEtHJ2dHx02fVhZGf5xzLFTRo=
-github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220614163012-aee4c3dba100 h1:yvVWgsjZEBS2G2R1fsQAH1uxILQYD3oRdaV/7TV3Pcw=
-github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220614163012-aee4c3dba100/go.mod h1:mYOyP0azai9MjDEttlHAqLzx+9kgEQG8LdFAQd39GTA=
+github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220615165012-a672b822aa44 h1:6naVpPm2qQ1mKlQ6psG2mJJDa1yVs+cnrm8GB2cul5s=
+github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220615165012-a672b822aa44/go.mod h1:2nSgkEYDCHf6mBXwLu4LRjr5j8u5ugsS1+o3vZ68Zs4=
+github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44 h1:De+4P4IWgJxscwkitWOYu5rOKiqwHgjjqEssK+Bwipg=
+github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44/go.mod h1:RgFun06XHXDrFP7uj0QTtFSuYBHoS5UI0LuKEH0/rNU=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=
 github.com/onsi/ginkgo v1.16.5 h1:8xi0RTUf59SOSfEtZMvwTvXYMzG4gV23XVHOZiXNtnE=
 github.com/onsi/gomega v1.18.1 h1:M1GfJqGRrBrrGGsbxzV5dqM2U2ApXefZCQpkukxYRLE=
