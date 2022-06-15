@@ -21,7 +21,7 @@ func StartServer() {
 	tmplPath := path.Join(serverPath, "api", "templates")
 	server.LoadHTMLFiles(
 		path.Join(tmplPath, "404.html"),
-		path.Join(tmplPath, "inspectURL.html"),
+		path.Join(tmplPath, "inspecturl.html"),
 	)
 	server.GET("/!:url", api.InspectURL)
 	server.GET("/:url", api.RedirectURL)
