@@ -25,7 +25,7 @@ func InspectURL(c *gin.Context) {
 		NotFound(c)
 		return
 	}
-	c.HTML(http.StatusOK, "inspectURL.html", x)
+	c.HTML(http.StatusOK, "inspecturl.html", x)
 }
 
 func NotFound(c *gin.Context) {
