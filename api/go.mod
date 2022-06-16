@@ -7,6 +7,8 @@ require (
 	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44
 )
 
+replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615165012-a672b822aa44 => ../tools/redishandler
+
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect

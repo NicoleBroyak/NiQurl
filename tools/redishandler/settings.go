@@ -2,7 +2,10 @@ package redishandler
 
 import (
 	"errors"
+	"fmt"
 	"log"
+
+	"github.com/nicolebroyak/niqurl/tools/randomusers"
 )
 
 func getSetting(setting string) (int, error) {
@@ -37,7 +40,23 @@ func checkSetting(setting string, def int) {
 				"initializing database key and " +
 				"generating 5 random users" +
 				"(see -generate-fake-users flag)")
-			GenerateFakeUsers(5)
+			UsersStruct, err := randomusers.GenerateFakeUsers(5)
+			if err != nil {
+				return
+			}
+			InsertUsers(UsersStruct)
 		}
 	}
+}
+
+func PrintCLISettings() {
+	fmt.Println("Current settings")
+	fmt.Printf(
+		"short url length: %v characters\n",
+		Client.Get(Ctx, "SHORT_URL_LEN"),
+	)
+	fmt.Printf(
+		"user wait time: %v s \n",
+		Client.Get(Ctx, "USER_WAIT_TIME"),
+	)
 }

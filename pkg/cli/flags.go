@@ -3,12 +3,12 @@ package cli
 import (
 	"log"
 
-	"github.com/nicolebroyak/niqurl/tools/redishandler"
-
 	"github.com/desertbit/grumble"
+	"github.com/nicolebroyak/niqurl/tools/randomusers"
+	"github.com/nicolebroyak/niqurl/tools/redishandler"
 )
 
-func GFUflag(a *grumble.App, flags grumble.FlagMap) error {
+func GenerateFakeUsersFlag(a *grumble.App, flags grumble.FlagMap) error {
 	num := flags.Int("generate-fake-users")
 	if num > 1000 || num < 1 {
 		if num != 0 {
@@ -16,5 +16,10 @@ func GFUflag(a *grumble.App, flags grumble.FlagMap) error {
 		}
 		return nil
 	}
-	return redishandler.GenerateFakeUsers(num)
+	UsersStruct, err := randomusers.GenerateFakeUsers(num)
+	if err != nil {
+		return err
+	}
+	redishandler.InsertUsers(UsersStruct)
+	return nil
 }

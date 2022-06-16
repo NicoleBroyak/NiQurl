@@ -8,6 +8,6 @@ import (
 
 func initialize(a *grumble.App, flags grumble.FlagMap) error {
 	redishandler.CheckSettings()
-	GFUflag(a, flags)
+	GenerateFakeUsersFlag(a, flags)
 	return nil
 }

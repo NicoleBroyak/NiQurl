@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"path"
 
 	"github.com/gin-gonic/gin"
@@ -17,8 +16,7 @@ func main() {
 
 func StartServer() {
 	server := gin.Default()
-	serverPath, _ := os.Getwd()
-	tmplPath := path.Join(serverPath, "api", "templates")
+	tmplPath := "/" + path.Join("go", "app", "api", "templates")
 	server.LoadHTMLFiles(
 		path.Join(tmplPath, "404.html"),
 		path.Join(tmplPath, "inspecturl.html"),

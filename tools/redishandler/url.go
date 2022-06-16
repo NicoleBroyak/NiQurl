@@ -1,68 +1,91 @@
 package redishandler
 
 import (
+	"crypto/md5"
+	"errors"
 	"fmt"
-	"log"
-	"math/rand"
 	"path"
 	"strconv"
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/nicolebroyak/niqurl/tools/urlhandler"
 )
 
-var ServerPath string = "niqurl-server:8081"
+var ServerPath string = "localhost:8081"
 
-func PrintShortURL(url string) error {
-	x, _ := Client.ZScan(Ctx, "longurl", 0, url, 0).Val()
+func PrintExistingShortURL(longURL *urlhandler.NiqURL) error {
+	x, _ := Client.ZScan(Ctx, "longurl", 0, longURL.String(), 0).Val()
 	i, err := strconv.Atoi(x[1])
 	if err != nil {
 		return err
 	}
 	shorturl := Client.ZRange(Ctx, "shorturl", int64(i), int64(i)).Val()
-	fmt.Println("URL [" + url + "] shortened before to: " + path.Join(ServerPath, shorturl[0]))
+	fmt.Println("URL [" + longURL.String() + "] shortened before to: " + path.Join(ServerPath, shorturl[0]))
 	return nil
 }
 
-func InsertURL(url, shorturl, user string) {
-	fmt.Println("Creating short URL for [" + url + "]: " + path.Join(ServerPath, shorturl))
+func InsertURLData(longURL *urlhandler.NiqURL, shorturl, user string) {
+	fmt.Println("Creating short URL for [" + longURL.String() + "]: " + path.Join(ServerPath, shorturl))
 	wt, _ := getSetting("USER_WAIT_TIME")
 	uc, _ := getSetting("URL_COUNT")
 	Client.Incr(Ctx, "URL_COUNT")
-	Client.ZAdd(Ctx, "longurl", &redis.Z{Score: float64(uc), Member: url})
+	Client.ZAdd(Ctx, "longurl", &redis.Z{Score: float64(uc), Member: longURL.String()})
 	Client.ZAdd(Ctx, "shorturl", &redis.Z{Score: float64(uc), Member: shorturl})
 	Client.RPush(Ctx, "createdby", user)
 	Client.Set(Ctx, user, true, time.Duration(wt*1000000000))
 }
 
-func ShortURL(url string) string {
+func ShortenURL(longURL *urlhandler.NiqURL) (string, error) {
 
-	var shrt string
-	n, _ := getSetting("SHORT_URL_LEN")
-
-	for i := 0; true; i++ {
-		if i == 100 {
-			log.Printf("Can't find available url with lenght of : %v\n", n)
-			log.Println("Increase url length by setlen command")
-			break
-		}
-		shrt = shortURLGenerate(n)
-		if CheckZSet(shrt, "shorturl") == true {
-			continue
-		}
-		break
+	shorturl := shortURLGenerate(longURL)
+	if !ExistsShortURL(shorturl) {
+		return shorturl, nil
 	}
-	return shrt
+	return "", errors.New(
+		"can't generate short url with" +
+			"specified length, please change" +
+			"length using setlen command")
 }
 
-// returns random
-func shortURLGenerate(n int) string {
-	chr := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	u := make([]byte, n)
-	for i := range u {
-		rand.Seed(time.Now().UTC().UnixNano())
-		u[i] = chr[rand.Intn(len(chr))]
-	}
+func shortURLGenerate(longURL *urlhandler.NiqURL) string {
+	urllen, _ := getSetting("SHORT_URL_LEN")
+	longurl := longURL.String()
+	longurlbyte := []byte(longurl)
+	MD5 := md5.Sum(longurlbyte)
+	stringMD5 := fmt.Sprintf("%x", MD5)
+	return stringMD5[:urllen]
+}
 
-	return string(u)
+func IsExistingShortURL(shorturl string) (exists bool, index int64) {
+
+	result, _ := Client.ZScan(
+		Ctx,
+		"shorturl",
+		0,
+		shorturl,
+		0,
+	).Val()
+	fmt.Println(result)
+
+	if len(result) > 0 {
+		index, _ := strconv.Atoi(result[1])
+		return true, int64(index)
+	}
+	return false, 0
+}
+
+func QueryForLongURL(index int64) string {
+
+	result := Client.ZRange(
+		Ctx,
+		"longurl",
+		index,
+		index,
+	).Val()
+	fmt.Println(result)
+	rawurl := result[0]
+	fmt.Println(rawurl)
+
+	return rawurl
 }
