@@ -8,7 +8,7 @@ import (
 	"github.com/nicolebroyak/niqurl/tools/redishandler"
 )
 
-func GenerateFakeUsersFlag(a *grumble.App, flags grumble.FlagMap) error {
+func generateFakeUsersFlag(a *grumble.App, flags grumble.FlagMap) error {
 	num := flags.Int("generate-fake-users")
 	if num > 1000 || num < 1 {
 		if num != 0 {
@@ -16,10 +16,7 @@ func GenerateFakeUsersFlag(a *grumble.App, flags grumble.FlagMap) error {
 		}
 		return nil
 	}
-	UsersStruct, err := randomusers.GenerateFakeUsers(num)
-	if err != nil {
-		return err
-	}
-	redishandler.InsertUsers(UsersStruct)
+	usersStruct := randomusers.GenerateFakeUsers(num)
+	redishandler.InsertUsers(usersStruct)
 	return nil
 }

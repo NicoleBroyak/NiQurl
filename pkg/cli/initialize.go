@@ -7,7 +7,7 @@ import (
 )
 
 func initialize(a *grumble.App, flags grumble.FlagMap) error {
-	redishandler.CheckSettings()
-	GenerateFakeUsersFlag(a, flags)
+	redishandler.SetInvalidSettingsToDefaults()
+	generateFakeUsersFlag(a, flags)
 	return nil
 }

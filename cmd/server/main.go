@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	redishandler.Start()
-	defer redishandler.Client.Close()
+	Client := redishandler.Start()
+	defer Client.Close()
 	StartServer()
 }
 
@@ -21,8 +21,7 @@ func StartServer() {
 		path.Join(tmplPath, "404.html"),
 		path.Join(tmplPath, "inspecturl.html"),
 	)
-	server.GET("/!:url", api.InspectURL)
+	server.GET("/!:url", api.ShowURLInfo)
 	server.GET("/:url", api.RedirectURL)
-	server.NoRoute(api.NotFound)
 	server.Run(":8081")
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	redishandler.Start()
-	defer redishandler.Client.Close()
+	Client := redishandler.Start()
+	defer Client.Close()
 	cli.Start()
 }

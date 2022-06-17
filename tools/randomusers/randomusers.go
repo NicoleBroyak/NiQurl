@@ -32,37 +32,37 @@ func QueryRandomUsersAPI(number int) ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
-	body, err := io.ReadAll(response.Body)
+	queryJSON, err := io.ReadAll(response.Body)
 	if err != nil {
 		return []byte{}, err
 	}
-	return body, nil
-}
-func GenerateFakeUsers(num int) (*UsersStruct, error) {
-	var UsersStruct *UsersStruct
-	QueryJSON, err := QueryRandomUsersAPI(num)
-	if err != nil {
-		return UsersStruct, err
-	}
-	UsersStruct, err = UsersStruct.New(QueryJSON)
-	if err != nil {
-		log.Print("Error related with random user API. Try again later")
-		return UsersStruct, err
-	}
-	log.Print("Generating random users...")
-	return UsersStruct, err
+	return queryJSON, nil
 }
 
-// returns UsersStruct with specified number of users
-func (User UsersStruct) New(QueryJSON []byte) (*UsersStruct, error) {
-	err := json.Unmarshal(QueryJSON, &User)
+func GenerateFakeUsers(num int) *UsersStruct {
+	queryJSON, err := QueryRandomUsersAPI(num)
 	if err != nil {
+		panic("couldn't generate random users, aborting app, try again later")
+	}
+	usersStruct, err := UsersStruct{}.NewFromAPI(queryJSON)
+	if err != nil {
+		panic("couldn't generate random users, aborting app, try again later")
+	}
+	return usersStruct
+}
+
+// returns UsersStruct from API Query result
+func (usersStruct UsersStruct) NewFromAPI(QueryJSON []byte) (*UsersStruct, error) {
+	err := json.Unmarshal(QueryJSON, &usersStruct)
+	if err != nil {
+		log.Print("Error related with random user API. Try again later")
 		return &UsersStruct{}, err
 	}
 
-	if len(User.Results) == 0 {
+	if len(usersStruct.Results) == 0 {
 		return &UsersStruct{}, errors.New("error with getting users")
 
 	}
-	return &User, nil
+	log.Print("Generating random users...")
+	return &usersStruct, nil
 }

@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/nicolebroyak/niqurl/tools/redishandler"
 	"github.com/nicolebroyak/niqurl/tools/urlhandler"
@@ -11,68 +10,60 @@ import (
 )
 
 func commands(app *grumble.App) {
-	settime(app)
-	setlen(app)
-	makeurl(app)
-	settings(app)
+	cmdSetTime(app)
+	cmdSetLen(app)
+	cmdMake(app)
+	cmdSettings(app)
 }
 
-func settime(app *grumble.App) {
+func cmdSetTime(app *grumble.App) {
 	app.AddCommand(&grumble.Command{
-		Name:    "settime",
-		Aliases: []string{"SETTIME"},
-		Help:    "set USER_WAIT_TIME variable, value in ms, must be > 0",
+		Name: "settime",
+		Help: "settime [miliseconds] ---> number between 1 and 1048576",
 		Args: func(a *grumble.Args) {
 			a.Int("settime", "settime")
 		},
-		Run: cmdSetTime,
+		Run: setTime,
 	})
 }
 
-func setlen(app *grumble.App) {
+func cmdSetLen(app *grumble.App) {
 	app.AddCommand(&grumble.Command{
-		Name:    "setlen",
-		Aliases: []string{"SETLEN"},
-		Help:    "set SHORT_URL_LEN variable, must be > 0",
+		Name: "setlen",
+		Help: "setlen [number] ---> number between 1 and 20",
 		Args: func(a *grumble.Args) {
 			a.Int("setlen", "setlen")
 		},
-		Run: cmdSetLen,
+		Run: setLen,
 	})
 }
 
-func makeurl(app *grumble.App) {
+func cmdMake(app *grumble.App) {
 	app.AddCommand(&grumble.Command{
-		Name:    "make",
-		Aliases: []string{"MAKE"},
-		Help:    "shorten url",
+		Name: "make",
+		Help: "make [url]",
 		Args: func(a *grumble.Args) {
 			a.String("url", "url")
 		},
-		Run: cmdMake,
+		Run: make,
 	})
 }
 
-func settings(app *grumble.App) {
+func cmdSettings(app *grumble.App) {
 	app.AddCommand(&grumble.Command{
 		Name: "settings",
-		Aliases: []string{"setup",
-			"config",
-			"SETTINGS",
-			"SETUP",
-			"CONFING"},
-		Help: "show settings",
-		Run:  cmdSettings,
+		Run:  ShowSettings,
+		Help: "shows settings",
 	})
 }
 
-func cmdSettings(c *grumble.Context) error {
-	redishandler.CheckSettings()
-	redishandler.PrintCLISettings()
+func ShowSettings(c *grumble.Context) error {
+	redishandler.SetInvalidSettingsToDefaults()
+	redishandler.PrintCurrentCLISettings()
 	return nil
 }
 
-func cmdChangeSetting(cmd, setting string, min, max int, c *grumble.Context) error {
+func changeSetting(cmd, setting string, min, max int, c *grumble.Context) error {
 	if c.Args.Int(cmd) < min || c.Args.Int(cmd) > max {
 		err := fmt.Errorf("%v variable must be between %v and %v", setting, min, max)
 		return err
@@ -81,48 +72,44 @@ func cmdChangeSetting(cmd, setting string, min, max int, c *grumble.Context) err
 	return nil
 }
 
-func cmdSetLen(c *grumble.Context) error {
-	return cmdChangeSetting("setlen", "SHORT_URL_LEN", 1, 20, c)
+func setLen(c *grumble.Context) error {
+	return changeSetting("setlen", "SHORT_URL_LEN", 1, 20, c)
 }
 
-func cmdSetTime(c *grumble.Context) error {
-	return cmdChangeSetting("settime", "USER_WAIT_TIME", 1, 1<<20, c)
+func setTime(c *grumble.Context) error {
+	return changeSetting("settime", "USER_WAIT_TIME", 1, 1<<20, c)
 }
 
-func cmdMake(c *grumble.Context) error {
-	longURL, err := processMakeArg(c.Args.String("url"))
+// Multiple functions used to perform make command
+// Consolidated into one function to satisfy
+// Grumble framework syntax requirements
+func make(c *grumble.Context) error {
+	// Validate settings and process url input
+	redishandler.SetInvalidSettingsToDefaults()
+	NiqURL, err := urlhandler.StringToNiqURL(c.Args.String("url"))
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
-	redishandler.CheckSettings()
+	// assign variables used to process function cases
+	NiqURL.IfEmptySchemeAddHTTPS()
+	NiqURL.UserName = redishandler.GetRandomUser()
+	NiqURL.GenerateShortURLPath(redishandler.GetSetting("SHORT_URL_LEN"))
 
-	if redishandler.ExistsLongURL(longURL.String()) {
-		redishandler.PrintExistingShortURL(longURL)
+	// check and processs possible conditions
+	switch {
+	case redishandler.ExistsLongURL(NiqURL.LongURL):
+		redishandler.ProcessExistingURL(NiqURL.LongURL)
+		return nil
+	case redishandler.IsUserOnWaitTime(NiqURL.UserName):
+		redishandler.PrintUserWaitTime(NiqURL.UserName)
+		return nil
+	case redishandler.ExistsShortURL(NiqURL.ShortURL):
+		urlhandler.ShortenURLError()
+		return nil
+	// finally insert URL if conditions above don't occur
+	default:
+		redishandler.InsertURLData(NiqURL)
 		return nil
 	}
-
-	username := redishandler.RandomUser()
-	if redishandler.IsUserLimited(username) {
-		redishandler.PrintUserWaitTime(username)
-		return nil
-	}
-
-	shorturl, err := redishandler.ShortenURL(longURL)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	redishandler.InsertURLData(longURL, shorturl, username)
-	return nil
-}
-
-func processMakeArg(arg string) (longURL *urlhandler.NiqURL, err error) {
-	longURL, err = urlhandler.InputStringToNiqURL(arg)
-	if err != nil {
-		log.Println(err)
-		return longURL, err
-	}
-	return longURL.AddHTTPSSchemeIfNonAbs(), nil
 }

@@ -4,9 +4,6 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-var Client = Start()
-var Ctx = Client.Context()
-
 func Start() *redis.Client {
 	Client := redis.NewClient(&redis.Options{
 		Addr:     "niqurl-redis:6379",
