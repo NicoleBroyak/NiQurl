@@ -5,10 +5,10 @@ go 1.18
 require (
 	github.com/desertbit/grumble v1.1.3
 	github.com/fatih/color v1.13.0
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619164241-f3ecc70ba53c
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619164241-f3ecc70ba53c
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619164241-f3ecc70ba53c
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619164241-f3ecc70ba53c
 )
 
 replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/redishandler

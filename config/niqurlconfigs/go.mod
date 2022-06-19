@@ -1,3 +1,3 @@
-module github.com/nicolebroyak/niqurl/config/niqurlconfigs 
+module github.com/nicolebroyak/niqurl/config/niqurlconfigs
 
 go 1.18

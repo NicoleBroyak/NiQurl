@@ -54,8 +54,14 @@ github.com/mattn/go-isatty v0.0.14 h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9
 github.com/mattn/go-isatty v0.0.14/go.mod h1:7GGIvUiUoEMVVmxf/4nioHXj79iQHKdU27kJ6hsGG94=
 github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b/go.mod h1:01TrycV0kFyexm33Z7vhZRXopbI8J3TDReVlkTgMUxE=
 github.com/nbutton23/zxcvbn-go v0.0.0-20180912185939-ae427f1e4c1d/go.mod h1:o96djdrsSGy3AWPyBgZMAGfxZNfgntdJG+11KU4QvbU=
-github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6 h1:JZZyTEg5uOmh6eTKRtM7jP9HTON1nrxl85LdCw6mhCY=
-github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6/go.mod h1:KwnVWYWONECZobUqPOBGzq1CcLeXcgutbKrR7uKsWWI=
+github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619164241-f3ecc70ba53c h1:aXQ4H+HC+0lz2638gU/ZAOeOyJgMjTxXaD7n5+HMldI=
+github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619164241-f3ecc70ba53c/go.mod h1:yq7MbS6Qt4iHls5nGhpwRrA2ShYQkuwzAt4vuHGrTXg=
+github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619164241-f3ecc70ba53c h1:86CgksexiF7ZViqxMCqpkqqoTOoCRgeqBxf+Pgk0sFk=
+github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619164241-f3ecc70ba53c/go.mod h1:aun4xqDqiC0LkughYlJG1ghEJc+WXrILglQwNqUcMW0=
+github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619164241-f3ecc70ba53c h1:VB0r6b5xpgw1R3gdS7ezyUVmrGsRnsZQ/NdasJ4n0dc=
+github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619164241-f3ecc70ba53c/go.mod h1:TLlg5Ql+gGkuVkBA+DWLwn8cMQ9QzGZacP5EoyF1Y0w=
+github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619164241-f3ecc70ba53c h1:YasTGDq8lzvRi2O0ROeAruxDzSVelXHAiDechtbBnxQ=
+github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619164241-f3ecc70ba53c/go.mod h1:xE9i8YXrl8woUytwEOnzvyhZ7W27sAD7JPSUrYzlka4=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=
 github.com/onsi/ginkgo v1.16.5 h1:8xi0RTUf59SOSfEtZMvwTvXYMzG4gV23XVHOZiXNtnE=
 github.com/onsi/gomega v1.18.1 h1:M1GfJqGRrBrrGGsbxzV5dqM2U2ApXefZCQpkukxYRLE=
