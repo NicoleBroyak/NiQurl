@@ -5,19 +5,19 @@ go 1.18
 require (
 	github.com/desertbit/grumble v1.1.3
 	github.com/fatih/color v1.13.0
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6
 )
 
-replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0 => ../../tools/redishandler
+replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/redishandler
 
-replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0 => ../../tools/randomusers
+replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/randomusers
 
-replace github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0 => ../../tools/urlhandler
+replace github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/urlhandler
 
-replace github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0 => ../../config/niqurlconfigs
+replace github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6 => ../../config/niqurlconfigs
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

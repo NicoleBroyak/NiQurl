@@ -3,16 +3,20 @@ module github.com/nicolebroyak/cmd/cli
 go 1.18
 
 require (
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0
-	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6
+	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220615185913-d7c5b03ae46e
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6
 )
 
 replace (
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0 => ../../config/niqurlconfigs
-	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0 => ../../pkg/cli
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0 => ../../tools/redishandler
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6 => ../../config/niqurlconfigs
+	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220615185913-d7c5b03ae46e => ../../pkg/cli
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220615185913-d7c5b03ae46e => ../../tools/redishandler
 )
+
+replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/randomusers
+
+replace github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/urlhandler
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -28,7 +32,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0 // indirect
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0 // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 // indirect
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6 // indirect
 	golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c // indirect
 )

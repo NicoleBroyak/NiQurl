@@ -2,15 +2,15 @@ module github.com/nicolebroyak/niqurl/api
 
 go 1.18
 
-replace github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0 => ../tools/urlhandler
+replace github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6 => ../tools/urlhandler
 
 require github.com/gin-gonic/gin v1.8.1
 
-require github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0
+require github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6
 
-replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0 => ../tools/redishandler
+replace github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619162436-c3bacffbf7e6 => ../tools/redishandler
 
-replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0 => ../tools/randomusers
+replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 => ../tools/randomusers
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -26,8 +26,9 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0 // indirect
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0 // indirect
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6 // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 // indirect
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619162436-c3bacffbf7e6 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
