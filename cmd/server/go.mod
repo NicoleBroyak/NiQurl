@@ -4,9 +4,9 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
-	github.com/nicolebroyak/niqurl/api v0.0.0-20220619164241-f3ecc70ba53c
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619164241-f3ecc70ba53c
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619164241-f3ecc70ba53c
+	github.com/nicolebroyak/niqurl/api v0.0.0-20220619170005-236bef90f79a
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619170005-236bef90f79a
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220619172856-62cf50ad86ab
 )
 
 replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619162436-c3bacffbf7e6 => ../../tools/randomusers
@@ -33,8 +33,8 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619164241-f3ecc70ba53c // indirect
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619164241-f3ecc70ba53c // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619172856-62cf50ad86ab // indirect
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619172856-62cf50ad86ab // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect

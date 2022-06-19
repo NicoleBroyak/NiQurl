@@ -4,9 +4,9 @@ go 1.18
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619164241-f3ecc70ba53c
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619164241-f3ecc70ba53c
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619164241-f3ecc70ba53c
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619170005-236bef90f79a
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619172856-62cf50ad86ab
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619172856-62cf50ad86ab
 )
 
 replace github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619162436-c3bacffbf7e6 => ../../config/niqurlconfigs
