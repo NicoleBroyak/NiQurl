@@ -20,4 +20,4 @@ func CreateAPISourceFromDefault(num int) string {
 	return APISource
 }
 
-var RedisHost = "localhost:6379"
+var RedisHost = "niqurl-redis:6379"
