@@ -20,4 +20,4 @@ func CreateAPISourceFromDefault(num int) string {
 	return APISource
 }
 
-var RedisHost = "localhost:9999"
+var RedisHost = "localhost:6379"
