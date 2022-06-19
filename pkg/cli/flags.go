@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/desertbit/grumble"
+	"github.com/nicolebroyak/niqurl/config/niqurlconfigs"
 	"github.com/nicolebroyak/niqurl/tools/randomusers"
 	"github.com/nicolebroyak/niqurl/tools/redishandler"
 )
@@ -16,7 +17,8 @@ func generateFakeUsersFlag(a *grumble.App, flags grumble.FlagMap) error {
 		}
 		return nil
 	}
-	usersStruct := randomusers.GenerateFakeUsers(num)
+	apiSource := niqurlconfigs.CreateAPISourceFromDefault(num)
+	usersStruct := randomusers.GenerateFakeUsers(apiSource, num)
 	redishandler.InsertUsers(usersStruct)
 	return nil
 }

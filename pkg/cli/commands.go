@@ -1,7 +1,9 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
+	"log"
 
 	"github.com/nicolebroyak/niqurl/tools/redishandler"
 	"github.com/nicolebroyak/niqurl/tools/urlhandler"
@@ -105,8 +107,11 @@ func make(c *grumble.Context) error {
 		redishandler.PrintUserWaitTime(NiqURL.UserName)
 		return nil
 	case redishandler.ExistsShortURL(NiqURL.ShortURL):
-		urlhandler.ShortenURLError()
-		return nil
+		err := errors.New("can't generate short url with" +
+			"specified length, please change" +
+			"length using setlen command")
+		log.Println(err)
+		return err
 	// finally insert URL if conditions above don't occur
 	default:
 		redishandler.InsertURLData(NiqURL)
