@@ -26,7 +26,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619170005-236bef90f79a // indirect
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619174626-21d7a352580e // indirect
 	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619172856-62cf50ad86ab // indirect
 	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619172856-62cf50ad86ab // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect

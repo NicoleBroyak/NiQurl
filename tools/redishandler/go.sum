@@ -5,8 +5,8 @@ github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f/go.mod h1:cu
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/go-redis/redis/v8 v8.11.5 h1:AcZZR7igkdvfVmQTPnu9WE37LRrO/YrBH5zWyjDC0oI=
 github.com/go-redis/redis/v8 v8.11.5/go.mod h1:gREzHqY1hg6oD9ngVRbLStwAWKhA0FEgq8Jd4h5lpwo=
-github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619170005-236bef90f79a h1:ui8s4UBIBb2PPdOj0V/tmUIJ9O1+xwMG7hjC8+D+coQ=
-github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619170005-236bef90f79a/go.mod h1:PxiU9iIGicKFU2vGc+kXV/5SM6h7LmDCJWo8lnDOkHM=
+github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619174626-21d7a352580e h1:wkP1S2pdVzxnD5Tp4/xTgD6+exqPxxmFfOvHHh8ylJc=
+github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220619174626-21d7a352580e/go.mod h1:PxiU9iIGicKFU2vGc+kXV/5SM6h7LmDCJWo8lnDOkHM=
 github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619172856-62cf50ad86ab h1:0dH1g+JU3yD2ig5t8fJA1t/zR44IqfFAiM0F6i4Uix4=
 github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220619172856-62cf50ad86ab/go.mod h1:aun4xqDqiC0LkughYlJG1ghEJc+WXrILglQwNqUcMW0=
 github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220619172856-62cf50ad86ab h1:YXpdSYMEIM9rHRdQHrm9wpP9wlgk4+45vBvEmCtMhpg=
