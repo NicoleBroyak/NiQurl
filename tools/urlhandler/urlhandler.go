@@ -19,11 +19,11 @@ type NiqURL struct {
 }
 
 func StringToNiqURL(input string) (*NiqURL, error) {
-	genericURL, err := url.Parse(input)
-	NiqURL := &NiqURL{genericURL, genericURL.String(), "", ""}
-	if err != nil {
-		return NiqURL, err
+	if input == "" {
+		return &NiqURL{}, errors.New("empty input")
 	}
+	genericURL, _ := url.Parse(input)
+	NiqURL := &NiqURL{genericURL, genericURL.String(), "", ""}
 	return NiqURL, nil
 }
 
@@ -44,12 +44,4 @@ func (NiqURL *NiqURL) GenerateShortURLPath(urlLen int) {
 	stringMD5 := fmt.Sprintf("%x", urlAsMD5)
 	randIndex := rand.Intn(31 - urlLen)
 	NiqURL.ShortURL = stringMD5[randIndex : randIndex+urlLen]
-}
-
-func ShortenURLError() error {
-	err := errors.New("can't generate short url with" +
-		"specified length, please change" +
-		"length using setlen command")
-	fmt.Println(err)
-	return err
 }

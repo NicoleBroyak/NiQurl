@@ -6,11 +6,11 @@ services:
         dockerfile: ./build/server/local/Dockerfile
     links:
       - redis
-    ports:
-      - "127.0.0.1:8081:8081"
     networks:
       - default
     command: ./server
+    environment:
+      - name=value
   niqurl-cli:
     container_name: niqurl-cli
     build:
@@ -26,7 +26,9 @@ services:
     command: ./niqurl
   redis:
     container_name: niqurl-redis
-    image: redis
+    build:
+      context: ../../
+      dockerfile: ./build/redis/Dockerfile
     networks:
       - default
 networks:

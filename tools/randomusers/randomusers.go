@@ -3,7 +3,6 @@ package randomusers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -26,8 +25,7 @@ type UsersStruct struct {
 	} `json:"results"`
 }
 
-func QueryRandomUsersAPI(number int) ([]byte, error) {
-	apiSource := fmt.Sprintf("https://randomuser.me/api/?results=%v&inc=login,name,email,registered", number)
+func QueryRandomUsersAPI(apiSource string, number int) ([]byte, error) {
 	response, err := http.Get(apiSource)
 	if err != nil {
 		return []byte{}, err
@@ -39,8 +37,8 @@ func QueryRandomUsersAPI(number int) ([]byte, error) {
 	return queryJSON, nil
 }
 
-func GenerateFakeUsers(num int) *UsersStruct {
-	queryJSON, err := QueryRandomUsersAPI(num)
+func GenerateFakeUsers(apiSource string, num int) *UsersStruct {
+	queryJSON, err := QueryRandomUsersAPI(apiSource, num)
 	if err != nil {
 		panic("couldn't generate random users, aborting app, try again later")
 	}

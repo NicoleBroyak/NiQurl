@@ -8,6 +8,17 @@ import (
 	"github.com/nicolebroyak/niqurl/tools/urlhandler"
 )
 
+func insertIntoList(listname string, value interface{}) {
+	client.RPush(context, listname, value)
+}
+
+func insertIntoSortedSet(zSetName string, index float64, value interface{}) {
+	client.ZAdd(context, zSetName, &redis.Z{
+		Score:  index,
+		Member: value,
+	})
+}
+
 func InsertUsers(UsersStruct *randomusers.UsersStruct) {
 	user_index := 0
 	for user_index < len(UsersStruct.Results) {
@@ -27,41 +38,28 @@ func insertUserData(UsersData *randomusers.UsersStruct, user_index int) {
 	insertRegistrationDate(UsersData.Results[user_index].Registered.Date)
 }
 
-// urlversion "shorturl" or "longurl"
-
-// generic function for insertLongURL and insertShortURL
-func insertURL(urlversion, url string) {
+func insertLongURL(longURL string) {
 	urlCount := GetSetting("URL_COUNT")
-	index := float64(urlCount)
-	client.ZAdd(
-		context,
-		urlversion,
-		&redis.Z{Score: index, Member: url},
-	)
+	insertIntoSortedSet("longurl", float64(urlCount), longURL)
 }
 
-func insertLongURL(url string) {
-	insertURL("longurl", url)
-}
-
-func insertShortURL(url string) {
-	insertURL("shorturl", url)
+func insertShortURL(shortURL string) {
+	urlCount := GetSetting("URL_COUNT")
+	insertIntoSortedSet("shorturl", float64(urlCount), shortURL)
 }
 
 func insertURLAuthor(user string) {
 	client.RPush(context, "createdby", user)
 }
 
-func insertIntoList(listname string, value interface{}) {
-	client.RPush(context, listname, value)
-}
-
 func insertUserName(username string) {
-	insertToZSet("USER_COUNT", "username", username)
+	userCount := GetSetting("USER_COUNT")
+	insertIntoSortedSet("username", float64(userCount), username)
 }
 
 func insertEmail(email string) {
-	insertToZSet("USER_COUNT", "email", email)
+	userCount := GetSetting("USER_COUNT")
+	insertIntoSortedSet("email", float64(userCount), email)
 }
 
 func insertFirstName(firstname string) {
@@ -73,7 +71,7 @@ func insertLastName(lastname string) {
 }
 
 func insertRegistrationDate(regdate time.Time) {
-	insertIntoList("regdate", regdate)
+	insertIntoList("regdate", regdate.String())
 }
 
 func InsertURLData(NiqURL *urlhandler.NiqURL) {
@@ -91,12 +89,4 @@ func insertUserWaitTime(user string) {
 	waitTime := GetSetting("USER_WAIT_TIME")
 	waitTime *= 1000000 // nanoseconds to miliseconds to satisft client.Set function
 	client.Set(context, user, true, time.Duration(int64(waitTime)))
-}
-
-func insertToZSet(setting, zSetName string, value interface{}) {
-	index := GetSetting(setting)
-	client.ZAdd(context, zSetName, &redis.Z{
-		Score:  float64(index),
-		Member: value,
-	})
 }

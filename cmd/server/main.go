@@ -5,11 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nicolebroyak/niqurl/api"
+	"github.com/nicolebroyak/niqurl/config/niqurlconfigs"
 	"github.com/nicolebroyak/niqurl/tools/redishandler"
 )
 
 func main() {
-	Client := redishandler.Start()
+	Client := redishandler.Start(niqurlconfigs.RedisHost)
 	defer Client.Close()
 	StartServer()
 }
@@ -23,5 +24,5 @@ func StartServer() {
 	)
 	server.GET("/!:url", api.ShowURLInfo)
 	server.GET("/:url", api.RedirectURL)
-	server.Run(":8081")
+	server.Run(":" + niqurlconfigs.ServerPort)
 }

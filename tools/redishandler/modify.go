@@ -3,16 +3,17 @@ package redishandler
 import (
 	"log"
 
+	"github.com/nicolebroyak/niqurl/config/niqurlconfigs"
 	"github.com/nicolebroyak/niqurl/tools/randomusers"
 )
 
 // used regularly in CLI to constantly provide valid settings
 func SetInvalidSettingsToDefaults() {
-	for setting, defaultValue := range settingsMap {
+	for setting, defaultValue := range niqurlconfigs.SettingsMap {
 		if !isValidSetting(setting) {
 			ChangeSetting(setting, defaultValue)
 			if setting == "USER_COUNT" {
-				UsersStruct := randomusers.GenerateFakeUsers(5)
+				UsersStruct := randomusers.GenerateFakeUsers(niqurlconfigs.CreateAPISourceFromDefault(5), 5)
 				InsertUsers(UsersStruct)
 			}
 		}

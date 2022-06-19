@@ -1,6 +1,7 @@
 package redishandler
 
 import (
+	"errors"
 	"math/rand"
 	"strconv"
 	"time"
@@ -15,48 +16,57 @@ func GetSetting(setting string) int {
 // urlversion "shorturl" or "longurl"
 //
 // Generic function of GetLongURL and GetShortURL
-func getURL(urlversion string, index int64) string {
-	query := client.ZRange(context, urlversion, index, index).Val()
+func getValueFromSortedSet(sortedSet string, index int64) string {
+	query := client.ZRange(context, sortedSet, index, index).Val()
+	if len(query) == 0 {
+		return ""
+	}
 	return query[0]
 }
 
 func GetLongURL(index int64) string {
-	return getURL("longurl", index)
+	return getValueFromSortedSet("longurl", index)
 }
 
 func getShortURL(index int64) string {
-	return getURL("shorturl", index)
+	return getValueFromSortedSet("shorturl", index)
+}
+
+func getValueFromList(listName string, index int64) string {
+	query := client.LRange(context, listName, index, index).Val()
+	if len(query) == 0 {
+		return ""
+	}
+	return query[0]
 }
 
 func GetURLAuthor(index int64) string {
-	query := client.ZRange(context, "createdby", index, index).Val()
-	return query[0]
+	return getValueFromList("createdby", index)
 }
 
 func getUserName(index int64) string {
-	query := client.ZRange(context, "username", index, index).Val()
-	return query[0]
+	return getValueFromSortedSet("username", index)
 }
 
 // urlversion "shorturl" or "longurl"
 //
 // Generic function of getIndexOfLongURL and GetIndexOfShortURL
-func getIndexOfURL(urlversion, url string) (int64, error) {
-	query, _ := client.ZScan(context, urlversion, 0, url, 0).Val()
-	index, err := strconv.Atoi(query[1])
-	if err != nil {
-		return 0, err
+func getIndexOfValueFromSortedSet(sortedSetName, value string) (int64, error) {
+	query, _ := client.ZScan(context, sortedSetName, 0, value, 0).Val()
+	if len(query) == 0 {
+		return -1, errors.New("value not found")
 	}
+	index, _ := strconv.Atoi(query[1])
 	return int64(index), nil
 }
 
 func GetIndexOfShortURL(shorturl string) (int64, error) {
-	return getIndexOfURL("shorturl", shorturl)
+	return getIndexOfValueFromSortedSet("shorturl", shorturl)
 
 }
 
 func getIndexOfLongURL(longurl string) (int64, error) {
-	return getIndexOfURL("longurl", longurl)
+	return getIndexOfValueFromSortedSet("longurl", longurl)
 }
 
 func GetRandomUser() string {
