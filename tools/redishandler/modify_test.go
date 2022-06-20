@@ -3,6 +3,7 @@ package redishandler
 import (
 	"testing"
 
+	"fmt"
 	"github.com/nicolebroyak/niqurl/config/niqurlconfigs"
 )
 
@@ -11,14 +12,14 @@ func TestChangeSetting(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error from redis client")
 	}
-	urlLenNew := urlLenOld + 2
+	urlLenNew := fmt.Sprintf("%v", urlLenOld+2)
 	ChangeSetting("SHORT_URL_LEN", urlLenNew)
-	urlLenNew, err = client.Get(context, "SHORT_URL_LEN").Int()
+	urlLenNewInt, err := client.Get(context, "SHORT_URL_LEN").Int()
 	client.Set(context, "SHORT_URL_LEN", urlLenOld, 0)
 	if err != nil {
 		t.Fatalf("Error from redis client")
 	}
-	if urlLenNew != urlLenOld+2 {
+	if urlLenNewInt != urlLenOld+2 {
 		t.Fatalf(`Error: %v want match for %v`, urlLenNew, urlLenOld+2)
 	}
 }
@@ -44,20 +45,16 @@ func TestSetInvalidSettingsToDefaults(t *testing.T) {
 	SetInvalidSettingsToDefaults()
 	PrintCurrentCLISettings()
 	for setting, defValue := range niqurlconfigs.SettingsMap {
-		_, ok := defValue.(int)
-		if ok {
-			afterSetup, _ := client.Get(context, setting).Int()
-			defValueInt, _ := defValue.(int)
-			if setting != "USER_COUNT" {
-				if afterSetup != defValueInt {
-					t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValueInt)
-					restorePreviousSettings()
-				}
-			} else {
-				if afterSetup != defValueInt+5 {
-					t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValueInt+5)
-					restorePreviousSettings()
-				}
+		afterSetup := client.Get(context, setting).String()
+		if setting != "USER_COUNT" {
+			if afterSetup != defValue {
+				t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValue)
+				restorePreviousSettings()
+			}
+		} else {
+			if afterSetup != defValueInt+5 {
+				t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, 5)
+				restorePreviousSettings()
 			}
 		}
 		restorePreviousSettings()

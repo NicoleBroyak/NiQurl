@@ -4,7 +4,7 @@
 
 ## Features
 
-NiQurl is Command Line Interface app which lets user to shorten any URL and convert it into shortURL based on NiQurl server address (currently hard-coded to `localhost:8081/[shorturl]`. After visiting address above, user is automatically redirected to original URL. If user visits address like `localhost:8081/![shorturl]`, instead of redirecting, server's API shows details about shortened URL. Length of shortened URL is configurable. 
+NiQurl is Command Line Interface app which lets user to shorten any URL and convert it into shortURL based on NiQurl server address (currently hard-coded to `localhost:9888/[shorturl]`. After visiting address above, user is automatically redirected to original URL. If user visits address like `localhost:9888/![shorturl]`, instead of redirecting, server's API shows details about shortened URL. Length of shortened URL is configurable. 
 
 App also works on presumption that its users are randomly generated using randomuser.me API. This presumption was made on project specification which assumes that if app user shortens URL, it should be assigned to random user from app database. When this random user was assigned to any other URL before, the app veryfies if this user can shorten URL in specified span of time. That span of time is configurable. Default value is set to 30000 milliseconds, so if span of time does not exceed this duration, app rejects shortening URL and prompts that this user has to wait x time to be able to shorten URL again.
 
@@ -36,7 +36,7 @@ Apart from these data, database also stores temporary keys named by username to 
 make [url]
 ```
 
-**make** command provides user shortening URL functionality. After invoking command, app veryfies basic url correctness and returns short URL which currently looks like `localhost:8081/[shorturl]` or warning related to `USER_WAIT_TIME` variable. If url was shortened before, make command returns short url from database.
+**make** command provides user shortening URL functionality. After invoking command, app veryfies basic url correctness and returns short URL which currently looks like `localhost:9888/[shorturl]` or warning related to `USER_WAIT_TIME` variable. If url was shortened before, make command returns short url from database.
 
 #### setlen
 
@@ -138,19 +138,27 @@ Now you should be see app shell like: `NiQurl> `. If so, you can start using app
 
 #### Use API
 
-After you will have some of urls shortened, you can confirm that app is working by visiting short url address, for example: `localhost:8081/F48n` or `localhost:8081/!F48n`
+After you will have some of urls shortened, you can confirm that app is working by visiting short url address, for example: `localhost:9888/F48n` or `localhost:9888/!F48n`
 
 You should see appropriate response from the server.
 
 #### Query database
 
-If you would like to query data from database, use command:
+If you have redis-cli installed locally, use command:
+
+```
+redis-cli -p 9999
+```
+
+You should see shell of redis client `127.0.0.1:9999>`
+
+Otherwise use command:
 
 ```
 docker exec -it niqurl-redis sh -c "redis-cli"
 ```
 
-You should see shell of redis client like `127.0.0.1:6379>`
+You should see shell of redis client `127.0.0.1:6379>`
 
 ## What next
 

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -18,26 +17,19 @@ var SettingsSlice = []string{
 	"SERVER_PORT",
 	"SERVER_PATH",
 }
-var SettingsMap = LoadEnvVarsIntoMap(SettingsSlice...)
+var SettingsMap = LoadEnvVarsIntoMap(SettingsSlice)
 
-func LoadEnvVarsIntoMap(settings ...string) map[string]interface{} {
-	settingsMap := map[string]interface{}{}
+func LoadEnvVarsIntoMap(settings []string) map[string]string {
+	settingsMap := map[string]string{}
 	for setting := range settings {
-		setting := fmt.Sprintf("%v", setting)
-		envString := os.Getenv(setting)
-		settingAsInt, err := strconv.Atoi(envString)
-		if err != nil {
-			settingsMap[setting] = envString
-		} else {
-			settingsMap[setting] = settingAsInt
-		}
+		settingsMap[fmt.Sprintf("%v", setting)] = os.Getenv(fmt.Sprintf("%v", setting))
 	}
 	log.Println(settingsMap)
 	return settingsMap
 }
 
 func CreateAPISourceFromDefault(num int) string {
-	apiSource, _ := SettingsMap["DEFAULT_API_SOURCE"].(string)
-	APISource := strings.Replace(apiSource, "[value]", fmt.Sprintf("%v", num), 1)
-	return APISource
+	apiSource := SettingsMap["DEFAULT_API_SOURCE"]
+	apiSource = strings.Replace(apiSource, "[value]", fmt.Sprintf("%v", num), 1)
+	return apiSource
 }

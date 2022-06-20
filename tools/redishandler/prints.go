@@ -10,14 +10,14 @@ import (
 
 func printExistingShortURL(shortURL string) {
 	fmt.Print("URL shortened before to: ")
-	serverPath, _ := niqurlconfigs.SettingsMap["SERVER_PATH"].(string)
+	serverPath := niqurlconfigs.SettingsMap["SERVER_PATH"]
 	fmt.Println(path.Join(serverPath, shortURL))
 }
 
 func printInsertingURLMsg(longURLstring, shorturl string) {
 	fmt.Print("Creating short URL for")
 	fmt.Printf(" [ %v ]: ", longURLstring)
-	serverPath, _ := niqurlconfigs.SettingsMap["SERVER_PATH"].(string)
+	serverPath := niqurlconfigs.SettingsMap["SERVER_PATH"]
 	fmt.Println(path.Join(serverPath, shorturl))
 }
 

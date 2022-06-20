@@ -10,10 +10,8 @@ import (
 // used regularly in CLI to constantly provide valid settings
 func SetInvalidSettingsToDefaults() {
 	for setting, defaultValue := range niqurlconfigs.SettingsMap {
-		_, ok := defaultValue.(int)
-		if !isValidSetting(setting) && ok {
-			defaultValueInt, _ := defaultValue.(int)
-			ChangeSetting(setting, defaultValueInt)
+		if !isValidSetting(setting) {
+			ChangeSetting(setting, defaultValue)
 			if setting == "USER_COUNT" {
 				UsersStruct := randomusers.GenerateFakeUsers(niqurlconfigs.CreateAPISourceFromDefault(5), 5)
 				InsertUsers(UsersStruct)
@@ -22,7 +20,7 @@ func SetInvalidSettingsToDefaults() {
 	}
 }
 
-func ChangeSetting(setting string, value int) {
+func ChangeSetting(setting string, value string) {
 	client.Set(context, setting, value, 0)
 	log.Printf("%v set to %v\n", setting, value)
 }
