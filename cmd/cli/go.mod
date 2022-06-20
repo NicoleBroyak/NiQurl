@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220620114441-90dcc89fc627
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620114441-90dcc89fc627
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620121444-2dec2d4df970
 )
 
 replace (

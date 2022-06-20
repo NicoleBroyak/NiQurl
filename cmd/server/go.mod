@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/nicolebroyak/niqurl/api v0.0.0-20220620114441-90dcc89fc627
 	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620114441-90dcc89fc627
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620114441-90dcc89fc627
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620121444-2dec2d4df970
 )
 
 replace github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620114441-90dcc89fc627 => ../../tools/randomusers
