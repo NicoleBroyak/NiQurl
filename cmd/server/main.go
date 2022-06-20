@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"path"
 
@@ -25,7 +26,7 @@ func StartServer() {
 	)
 	server.GET("/!:url", api.ShowURLInfo)
 	server.GET("/:url", api.RedirectURL)
-	port := niqurlconfigs.ServerPort
+	port := fmt.Sprintf(":%v", niqurlconfigs.SettingsMap["SERVER_PORT"])
 	log.Println(port)
-	server.Run(":" + port)
+	server.Run(port)
 }

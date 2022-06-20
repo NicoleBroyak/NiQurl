@@ -27,6 +27,7 @@ services:
       - default
     stdin_open: true 
     tty: true
+    command: /niqurl/cmd/cli/niqurl
   redis:
     env_file: ../../config/niqurlconfigs/envfile.env
     container_name: niqurl-redis

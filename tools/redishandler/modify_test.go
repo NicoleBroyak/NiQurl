@@ -44,18 +44,22 @@ func TestSetInvalidSettingsToDefaults(t *testing.T) {
 	SetInvalidSettingsToDefaults()
 	PrintCurrentCLISettings()
 	for setting, defValue := range niqurlconfigs.SettingsMap {
-		afterSetup, _ := client.Get(context, setting).Int()
-		if setting != "USER_COUNT" {
-			if afterSetup != defValue {
-				t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValue)
-				restorePreviousSettings()
-			}
-		} else {
-			if afterSetup != defValue+5 {
-				t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValue+5)
-				restorePreviousSettings()
+		_, ok := defValue.(int)
+		if ok {
+			afterSetup, _ := client.Get(context, setting).Int()
+			defValueInt, _ := defValue.(int)
+			if setting != "USER_COUNT" {
+				if afterSetup != defValueInt {
+					t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValueInt)
+					restorePreviousSettings()
+				}
+			} else {
+				if afterSetup != defValueInt+5 {
+					t.Fatalf(`Error in setting %q: %v want match for %v`, setting, afterSetup, defValueInt+5)
+					restorePreviousSettings()
+				}
 			}
 		}
+		restorePreviousSettings()
 	}
-	restorePreviousSettings()
 }

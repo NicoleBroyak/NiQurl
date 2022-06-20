@@ -10,8 +10,10 @@ import (
 // used regularly in CLI to constantly provide valid settings
 func SetInvalidSettingsToDefaults() {
 	for setting, defaultValue := range niqurlconfigs.SettingsMap {
-		if !isValidSetting(setting) {
-			ChangeSetting(setting, defaultValue)
+		_, ok := defaultValue.(int)
+		if !isValidSetting(setting) && ok {
+			defaultValueInt, _ := defaultValue.(int)
+			ChangeSetting(setting, defaultValueInt)
 			if setting == "USER_COUNT" {
 				UsersStruct := randomusers.GenerateFakeUsers(niqurlconfigs.CreateAPISourceFromDefault(5), 5)
 				InsertUsers(UsersStruct)

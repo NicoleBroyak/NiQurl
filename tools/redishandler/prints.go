@@ -10,13 +10,15 @@ import (
 
 func printExistingShortURL(shortURL string) {
 	fmt.Print("URL shortened before to: ")
-	fmt.Println(path.Join(niqurlconfigs.ServerPath, shortURL))
+	serverPath, _ := niqurlconfigs.SettingsMap["SERVER_PATH"].(string)
+	fmt.Println(path.Join(serverPath, shortURL))
 }
 
 func printInsertingURLMsg(longURLstring, shorturl string) {
 	fmt.Print("Creating short URL for")
 	fmt.Printf(" [ %v ]: ", longURLstring)
-	fmt.Println(path.Join(niqurlconfigs.ServerPath, shorturl))
+	serverPath, _ := niqurlconfigs.SettingsMap["SERVER_PATH"].(string)
+	fmt.Println(path.Join(serverPath, shorturl))
 }
 
 func PrintUserWaitTime(user string) {
