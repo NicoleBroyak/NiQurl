@@ -6,7 +6,7 @@ require (
 	github.com/desertbit/grumble v1.1.3
 	github.com/fatih/color v1.13.0
 	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620114441-90dcc89fc627
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620114441-90dcc89fc627
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620121358-59b6bccadad0
 	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620114441-90dcc89fc627
 	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620114441-90dcc89fc627
 )

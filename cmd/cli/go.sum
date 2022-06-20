@@ -56,6 +56,8 @@ github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b/go.mod h1:01TrycV0kFyex
 github.com/nbutton23/zxcvbn-go v0.0.0-20180912185939-ae427f1e4c1d/go.mod h1:o96djdrsSGy3AWPyBgZMAGfxZNfgntdJG+11KU4QvbU=
 github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220620114441-90dcc89fc627 h1:KL+dmwrTdGWI8LNvvY+1n2hXHoLvnGdSY6RGk7BDq/w=
 github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220620114441-90dcc89fc627/go.mod h1:CIi4vSGhEJ7agajNMH474uf7JiBxK/Q7DqEuBgUTeoA=
+github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620121358-59b6bccadad0 h1:Loko/mNqTAkpSPSSTqqXzpODUFWzzaY6ACcRZgV+wYY=
+github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620121358-59b6bccadad0/go.mod h1:g3UI/VGRRmUdLKGfIYFEJ1OrHleOXLmQpqnrTPfetAY=
 github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620114441-90dcc89fc627 h1:oMHXzQi0jhPAPsMK417iXyr0RXng9vbsYekYQ+J/8VE=
 github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620114441-90dcc89fc627/go.mod h1:RgjakK9E9GZlBRSYDXs1P+I7YlVDX+JQDOEEUFItb0w=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=

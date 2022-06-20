@@ -33,7 +33,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620114441-90dcc89fc627 // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620121358-59b6bccadad0 // indirect
 	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620114441-90dcc89fc627 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect

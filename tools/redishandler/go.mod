@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620114441-90dcc89fc627
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620114441-90dcc89fc627
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620121358-59b6bccadad0
 	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620114441-90dcc89fc627
 )
 
