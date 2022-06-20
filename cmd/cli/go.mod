@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/nicolebroyak/niqurl/pkg/cli v0.0.0-20220620154855-ef4a64dc19a4
-	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620154855-ef4a64dc19a4
+	github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620160756-44874244485a
 )
 
 require (
@@ -21,8 +21,8 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620152918-2dfcee0d116e // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620154855-ef4a64dc19a4 // indirect
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620154855-ef4a64dc19a4 // indirect
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620160756-44874244485a // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620160756-44874244485a // indirect
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620160756-44874244485a // indirect
 	golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c // indirect
 )

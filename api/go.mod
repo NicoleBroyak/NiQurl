@@ -4,7 +4,7 @@ go 1.18
 
 require github.com/gin-gonic/gin v1.8.1
 
-require github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620154855-ef4a64dc19a4
+require github.com/nicolebroyak/niqurl/tools/redishandler v0.0.0-20220620160756-44874244485a
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -20,9 +20,9 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620152918-2dfcee0d116e // indirect
-	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620154855-ef4a64dc19a4 // indirect
-	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620154855-ef4a64dc19a4 // indirect
+	github.com/nicolebroyak/niqurl/config/niqurlconfigs v0.0.0-20220620160756-44874244485a // indirect
+	github.com/nicolebroyak/niqurl/tools/randomusers v0.0.0-20220620160756-44874244485a // indirect
+	github.com/nicolebroyak/niqurl/tools/urlhandler v0.0.0-20220620160756-44874244485a // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
