@@ -70,7 +70,7 @@ func changeSetting(cmd, setting string, min, max int, c *grumble.Context) error 
 		err := fmt.Errorf("%v variable must be between %v and %v", setting, min, max)
 		return err
 	}
-	redishandler.ChangeSetting(setting, c.Args.Int(cmd))
+	redishandler.ChangeSetting(setting, fmt.Sprintf("%v", c.Args.Int(cmd)))
 	return nil
 }
 
