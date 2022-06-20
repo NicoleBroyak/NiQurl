@@ -2,11 +2,12 @@ package niqurlconfigs
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
 var DefaultAPISource = "https://randomuser.me/api/?results=[value]&inc=login,name,email,registered"
-var ServerPort = "8081"
+var ServerPort = os.Getenv("SERVER_PORT")
 var ServerPath = "localhost:" + ServerPort
 var SettingsMap = map[string]int{
 	"SHORT_URL_LEN":  4,
@@ -20,4 +21,4 @@ func CreateAPISourceFromDefault(num int) string {
 	return APISource
 }
 
-var RedisHost = "niqurl-redis:6379"
+var RedisHost = os.Getenv("REDIS_PORT")

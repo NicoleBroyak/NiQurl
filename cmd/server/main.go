@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"path"
 
 	"github.com/gin-gonic/gin"
@@ -17,12 +18,14 @@ func main() {
 
 func StartServer() {
 	server := gin.Default()
-	tmplPath := "/" + path.Join("go", "app", "api", "templates")
+	tmplPath := "/" + path.Join("niqurl", "api", "templates")
 	server.LoadHTMLFiles(
 		path.Join(tmplPath, "404.html"),
 		path.Join(tmplPath, "inspecturl.html"),
 	)
 	server.GET("/!:url", api.ShowURLInfo)
 	server.GET("/:url", api.RedirectURL)
-	server.Run(":" + niqurlconfigs.ServerPort)
+	port := niqurlconfigs.ServerPort
+	log.Println(port)
+	server.Run("localhost:" + port)
 }

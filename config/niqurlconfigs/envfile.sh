@@ -1,2 +1,0 @@
-export SERVER_PORT="8081"
-export REDIS_PORT="9999"

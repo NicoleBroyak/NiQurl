@@ -1,10 +1,9 @@
 FROM golang:1.18
 
-WORKDIR /go/app/
+WORKDIR /niqurl
 COPY . .
-WORKDIR /go/app/cmd/server/
-RUN . ../../config/niqurlconfigs/envfile.sh
-RUN go mod tidy
-RUN go build -o server
-
-EXPOSE 8081
+WORKDIR /
+RUN cp /niqurl/config/niqurlconfigs/init.sh init.sh
+RUN chmod +x init.sh
+RUN . /init.sh
+EXPOSE ${SERVER_PORT}

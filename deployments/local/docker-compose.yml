@@ -1,6 +1,7 @@
 services:
   niqurl-server:
     container_name: niqurl-server
+    env_file: ../../config/niqurlconfigs/envfile.env
     build:
         context: ../../
         dockerfile: ./build/server/local/Dockerfile
@@ -9,8 +10,10 @@ services:
     networks:
       - default
     ports:
-      - "127.0.0.1:8081:8081"
-    command: ./server
+      - "127.0.0.1:${SERVER_PORT}:${SERVER_PORT}"
+    command: /niqurl/cmd/server/server
+    stdin_open: true 
+    tty: true
   niqurl-cli:
     container_name: niqurl-cli
     build:
@@ -23,7 +26,6 @@ services:
       - default
     stdin_open: true 
     tty: true
-    command: ./niqurl
   redis:
     container_name: niqurl-redis
     image: redis
