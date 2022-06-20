@@ -1,6 +1,4 @@
 package redishandler
 
-import "github.com/nicolebroyak/niqurl/config/niqurlconfigs"
-
-var client = Start(niqurlconfigs.RedisHost)
+var client = Start("niqurl-redis:6379")
 var context = client.Context()

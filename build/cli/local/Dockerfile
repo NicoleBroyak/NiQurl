@@ -1,8 +1,6 @@
 FROM golang:1.18
 
-WORKDIR /go/app/
+WORKDIR /niqurl
 COPY . .
-
-WORKDIR /go/app/cmd/cli/
-
-EXPOSE 8081
+WORKDIR /niqurl/cmd/cli/
+RUN go get -u && go mod tidy & go build -o niqurl

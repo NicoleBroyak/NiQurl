@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	Client := redishandler.Start(niqurlconfigs.RedisHost)
+	Client := redishandler.Start("niqurl-redis:6379")
 	defer Client.Close()
 	StartServer()
 }
@@ -27,5 +27,5 @@ func StartServer() {
 	server.GET("/:url", api.RedirectURL)
 	port := niqurlconfigs.ServerPort
 	log.Println(port)
-	server.Run("localhost:" + port)
+	server.Run(":" + port)
 }

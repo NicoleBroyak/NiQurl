@@ -15,6 +15,7 @@ services:
     stdin_open: true 
     tty: true
   niqurl-cli:
+    env_file: ../../config/niqurlconfigs/envfile.env
     container_name: niqurl-cli
     build:
       context: ../../
@@ -27,10 +28,13 @@ services:
     stdin_open: true 
     tty: true
   redis:
+    env_file: ../../config/niqurlconfigs/envfile.env
     container_name: niqurl-redis
     image: redis
     networks:
       - default
+    ports:
+      - "127.0.0.1:${REDIS_PORT}:6379"
 networks:
   default:
     driver: bridge
